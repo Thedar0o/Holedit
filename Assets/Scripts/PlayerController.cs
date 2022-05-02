@@ -5,34 +5,57 @@ using UnityEngine;
 public class PlayerController : Controller
 {
     public GameObject Character;
-
     public float Speed;
+
+    private RaycastHit m_mouseClickHit;
+    private Controller.PlayerStates m_Playerstates;
+    private Controller.InputStateFlags m_Inputstates;
+    private Ray m_lastMousePos;
+    private Vector3 m_pos;
+
 
     public override void Init()
     {
         base.Init();
-
+        m_Playerstates = new PlayerStates();
+        m_Inputstates = new InputStateFlags();
+        m_Inputstates = InputStateFlags.ReleaseInput;
     }
 
     public override void Control(float speed)
     {
-        if (UseLeftMouse()) MovePlayerToPosition(speed);
+        //if (UseLeftMouse())
+        //{
+        m_Playerstates = PlayerStates.OnMove;
+        MovePlayerToPosition(speed);
+        // }
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Control(Speed);
+        if (UseLeftMouse())
+            Control(Speed);
     }
 
     private void MovePlayerToPosition(float speed)
     {
-        Character.transform.position = new Vector3(Time.deltaTime * speed, 0f, 0f);
+        if (m_Inputstates != InputStateFlags.LockInput)
+        {
+            m_lastMousePos = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(m_lastMousePos, out m_mouseClickHit))
+            {
+                m_pos = m_mouseClickHit.point;
+                Character.transform.position = new Vector3(Vector3.Lerp(Character.transform.position, m_pos, speed * Time.deltaTime).x, 0.5f, Vector3.Lerp(Character.transform.position, m_pos, speed * Time.deltaTime).z);
+            }
+        }
     }
 }

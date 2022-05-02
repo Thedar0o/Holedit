@@ -18,6 +18,13 @@ public abstract class Controller : MonoBehaviour, IController
         BlockSpawn,
     }
 
+    public enum PlayerStates
+    {
+        Null = -1,
+        OnMove = 0,
+        OnStanding,
+    }
+
     public enum MouseButtons
     {
         Null = -1,
@@ -40,18 +47,18 @@ public abstract class Controller : MonoBehaviour, IController
 
     public virtual bool UseLeftMouse()
     {
-        if(Input.GetMouseButtonDown((int)MouseButtons.Left)) return true;
+        if (Input.GetMouseButton((int)MouseButtons.Left)) return true;
         return false;
     }
     public virtual bool UseRightMouse()
     {
-        if (Input.GetMouseButtonDown((int)MouseButtons.Right)) return true;
+        if (Input.GetMouseButton((int)MouseButtons.Right)) return true;
         return false;
     }
 
     public virtual bool UseMiddleMouse()
     {
-        if (Input.GetMouseButtonDown((int)MouseButtons.Middle)) return true;
+        if (Input.GetMouseButton((int)MouseButtons.Middle)) return true;
         return false;
     }
 
