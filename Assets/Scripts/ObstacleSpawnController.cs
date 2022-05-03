@@ -34,8 +34,7 @@ public class ObstacleSpawnController : MonoBehaviour
         for (int i = 0; i < SpawnAmmount; i++)
         {
             var obj = Instantiate(ObjectHolder);
-            obj.SetActive(false);
-            
+            obj.SetActive(false);            
             m_Obstacles.Add(RandomizeObstacles(obj));
         }
     }
@@ -59,12 +58,12 @@ public class ObstacleSpawnController : MonoBehaviour
         var ObstacleControl = obst.GetComponent<ObstacleController>();
         if (Random.Range(0, 2) == 1)
         {
-            m_ObstSpawnPoint = -7;
+            obst.transform.position = new Vector3(0,0,-7);
             ObstacleControl.IsSpawnedDown = true;
         }
         else
         {
-            m_ObstSpawnPoint = 7;
+            obst.transform.position = new Vector3(0,0,7);
             ObstacleControl.IsSpawnedDown = false;
         }
 
