@@ -10,10 +10,10 @@ public class ObstacleSpawnController : MonoBehaviour
     private static int s_Widht = 17;
     private int m_ObstSpawnPoint;
     private int m_CubeSpawnPoint;
-    private int m_LeftObstxScale = 8;
-    private int m_LeftObstPos;
-    private int m_RightObstxScale = 8;
-    private int m_RightObstPos;
+    private int m_LeftObstxScale;
+    private float m_LeftObstPos;
+    private int m_RightObstxScale;
+    private float m_RightObstPos;
 
 
     [SerializeField]
@@ -35,7 +35,8 @@ public class ObstacleSpawnController : MonoBehaviour
         {
             var obj = Instantiate(ObjectHolder);
             obj.SetActive(false);
-            m_Obstacles.Add(obj);
+            
+            m_Obstacles.Add(RandomizeObstacles(obj));
         }
     }
 
@@ -50,38 +51,55 @@ public class ObstacleSpawnController : MonoBehaviour
             }
         }
         return null;
-    }
-
-    private void ChangeHolePosition()
-    {
-       
-    }
+    }    
 
     private GameObject RandomizeObstacles(GameObject obst)
     {
+        ZeroAll();
+        var ObstacleControl = obst.GetComponent<ObstacleController>();
         if (Random.Range(0, 2) == 1)
         {
             m_ObstSpawnPoint = -7;
-            ObjectHolder.GetComponent<ObstacleController>().IsSpawnedDown = true;
+            ObstacleControl.IsSpawnedDown = true;
         }
         else
         {
             m_ObstSpawnPoint = 7;
-            ObjectHolder.GetComponent<ObstacleController>().IsSpawnedDown = false;
+            ObstacleControl.IsSpawnedDown = false;
         }
 
-        m_CubeSpawnPoint = Random.Range(-8, 8);
-        if (m_CubeSpawnPoint < 0)
+        m_CubeSpawnPoint = Random.Range(-7, 7);
+        if (m_CubeSpawnPoint < 0) //-7, -6 , -5, -4, -3, -2 , -1
         {
-            m_LeftObstxScale = m_LeftObstxScale + m_CubeSpawnPoint;
-            m_RightObstxScale = m_RightObstxScale - m_CubeSpawnPoint;
+            m_LeftObstxScale -= m_CubeSpawnPoint*(-1);
+            m_LeftObstPos = -(((Mathf.Abs(8f-m_LeftObstxScale)) / 2f)-m_LeftObstPos);
+            m_RightObstxScale += m_CubeSpawnPoint*(-1);
+            m_RightObstPos = (Mathf.Abs(((Mathf.Abs(8f - m_RightObstxScale)) / 2f)-m_RightObstPos));
         }
         else
         {
-            m_LeftObstxScale = m_LeftObstxScale - m_CubeSpawnPoint;
-            m_RightObstxScale = m_RightObstxScale + m_CubeSpawnPoint;
+            m_LeftObstxScale += m_CubeSpawnPoint;
+            m_LeftObstPos = (((Mathf.Abs(8f - m_LeftObstxScale)) / 2f) + m_LeftObstPos);
+            m_RightObstxScale -= m_CubeSpawnPoint;
+            m_RightObstPos = (Mathf.Abs(((Mathf.Abs(8f - m_RightObstxScale)) / 2f) + m_RightObstPos));
         }
+        ObstacleControl.Hole.transform.localPosition = new Vector3(m_CubeSpawnPoint, 0, 0);
+
+        ObstacleControl.LeftBlock.transform.localScale = new Vector3(m_LeftObstxScale, 1, 1);
+        ObstacleControl.LeftBlock.transform.localPosition = new Vector3(m_LeftObstPos, 0, 0);
+        
+        ObstacleControl.RightBlock.transform.localScale = new Vector3(m_RightObstxScale,  1, 1);
+        ObstacleControl.RightBlock.transform.localPosition = new Vector3(m_RightObstPos, 0, 0);
 
         return obst;
+    }
+
+    private void ZeroAll()
+    {
+        m_CubeSpawnPoint = 0;
+        m_LeftObstxScale = 8;
+        m_LeftObstPos = -4.5f;
+        m_RightObstxScale = 8;
+        m_RightObstPos = 4.5f;
     }
 }
