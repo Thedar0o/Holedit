@@ -38,7 +38,7 @@ public abstract class Controller : MonoBehaviour, IController
 
     public bool IsPlayer { get; set; }
 
-    public abstract void Control(float speed);
+    public abstract void Move(float speed);
    
     public virtual void Init()
     {

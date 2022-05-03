@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerController : Controller
 {
-    public GameObject Character;
-    public float Speed;
+    [SerializeField]
+    private GameObject Character;
+    [SerializeField]
+    private float Speed;
 
     private RaycastHit m_mouseClickHit;
     private Controller.PlayerStates m_Playerstates;
@@ -22,7 +24,7 @@ public class PlayerController : Controller
         m_Inputstates = InputStateFlags.ReleaseInput;
     }
 
-    public override void Control(float speed)
+    public override void Move(float speed)
     {
         //if (UseLeftMouse())
         //{
@@ -42,7 +44,7 @@ public class PlayerController : Controller
     void Update()
     {
         if (UseLeftMouse())
-            Control(Speed);
+            Move(Speed);
     }
 
     private void MovePlayerToPosition(float speed)
