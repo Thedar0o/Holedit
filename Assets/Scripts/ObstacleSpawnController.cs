@@ -33,7 +33,7 @@ public class ObstacleSpawnController : MonoBehaviour
     {
         for (int i = 0; i < SpawnAmmount; i++)
         {
-            var obj = Instantiate(ObjectHolder);
+            GameObject obj = Instantiate(ObjectHolder);
             obj.SetActive(false);            
             m_Obstacles.Add(RandomizeObstacles(obj));
         }
