@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ObstacleSpawnController : MonoBehaviour
 {
-    public static ObstacleSpawnController Instance;
+    [Tooltip("How long slab shoud be obstacles + 1 as hole")]
+    [SerializeField]
+    [Range(3, 17)] private int BlockLongValue;
 
+    public static ObstacleSpawnController Instance;
     private List<GameObject> m_Obstacles = new List<GameObject>();
     private static int s_Widht = 17;
     private int m_ObstSpawnPoint;

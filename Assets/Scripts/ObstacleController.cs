@@ -4,33 +4,32 @@ using UnityEngine;
 
 public class ObstacleController : Controller
 {
+    public GameObject Hole;
+    public GameObject LeftBlock;
+    public GameObject RightBlock;
+    public bool IsSpawnedDown;
 
+    private IEnumerator m_Hiding;
     private MeshRenderer m_HoleRenderer;
     private MeshRenderer m_LeftBlockRenderer;
     private MeshRenderer m_RightBlockRenderer;
     private bool m_IsFading; 
     private float alpha = 1;
+    private float m_t = 0;
 
-    public bool IsSpawnedDown;
-    public GameObject Hole;
-    public GameObject LeftBlock;
-    public GameObject RightBlock;
-    private IEnumerator m_Hiding;
 
     private void Start()
-    {
-        m_HoleRenderer = Hole.GetComponent<MeshRenderer>();
-        m_LeftBlockRenderer= LeftBlock.GetComponent<MeshRenderer>();
-        m_RightBlockRenderer= RightBlock.GetComponent<MeshRenderer>();
-                
-        //m_Hiding = HideAndCreateNew(Speed);        
-        //StartCoroutine(m_Hiding);
+    {          
+
     }
 
-    private void OnEnable()
+    private void InitValues()
     {
+        m_HoleRenderer = Hole.GetComponent<MeshRenderer>();
+        m_LeftBlockRenderer = LeftBlock.GetComponent<MeshRenderer>();
+        m_RightBlockRenderer = RightBlock.GetComponent<MeshRenderer>();
         Speed = Random.Range(2f, 5f);
-        t = 0;
+        m_t = 0;
         alpha = 1;
         m_Hiding = HideAndCreateNew(Speed);
         StartCoroutine(m_Hiding);
@@ -38,6 +37,12 @@ public class ObstacleController : Controller
         m_HoleRenderer.material.color = new Color(m_HoleRenderer.material.color.r, m_HoleRenderer.material.color.g, m_HoleRenderer.material.color.b, 1);
         m_LeftBlockRenderer.material.color = new Color(m_LeftBlockRenderer.material.color.r, m_LeftBlockRenderer.material.color.g, m_LeftBlockRenderer.material.color.b, 1);
         m_RightBlockRenderer.material.color = new Color(m_RightBlockRenderer.material.color.r, m_RightBlockRenderer.material.color.g, m_RightBlockRenderer.material.color.b, 1);
+
+    }
+
+    private void OnEnable()
+    {
+        InitValues();
     }
 
     public override void Move(float speed)
@@ -48,13 +53,13 @@ public class ObstacleController : Controller
         }
         else transform.position -= new Vector3(0f, 0f, speed * Time.deltaTime);
     }
-    // Start is called before the first frame update
+   
 
     private void Update()
     {
         Move(Speed);       
     }
-    float t=0;
+    
     IEnumerator HideAndCreateNew(float duration)
     {
         do
@@ -68,9 +73,8 @@ public class ObstacleController : Controller
         
         while (m_IsFading)
         {
-            alpha = Mathf.Lerp(1f, 0f, t);
-            t += 0.4f*Time.deltaTime;
-            Debug.Log(alpha);
+            alpha = Mathf.Lerp(1f, 0f, m_t);
+            m_t += 0.4f*Time.deltaTime;
             m_HoleRenderer.material.color = new Color(m_HoleRenderer.material.color.r, m_HoleRenderer.material.color.g, m_HoleRenderer.material.color.b, alpha);
             m_LeftBlockRenderer.material.color = new Color(m_LeftBlockRenderer.material.color.r, m_LeftBlockRenderer.material.color.g, m_LeftBlockRenderer.material.color.b, alpha);
             m_RightBlockRenderer.material.color = new Color(m_RightBlockRenderer.material.color.r, m_RightBlockRenderer.material.color.g, m_RightBlockRenderer.material.color.b, alpha);
@@ -89,6 +93,6 @@ public class ObstacleController : Controller
         }
         
         yield return null;
-    }
+    }      
 
 }
