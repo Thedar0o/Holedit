@@ -40,6 +40,7 @@ public class ObstacleSpawnController : MonoBehaviour
             obj.SetActive(false);            
             m_Obstacles.Add(RandomizeObstacles(obj));
         }
+        StartCoroutine("Spawn");
     }
 
     public GameObject GetPooledObj()
@@ -53,7 +54,25 @@ public class ObstacleSpawnController : MonoBehaviour
             }
         }
         return null;
-    }    
+    }
+    public void SpawnObstacle()
+    {
+        GameObject obs = GetPooledObj();
+        if (obs != null)
+        {
+            obs.SetActive(true);
+        }
+    }
+
+    IEnumerator Spawn()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(1f,3f));
+            SpawnObstacle();
+            //yield return null;
+        }
+    }
 
     private GameObject RandomizeObstacles(GameObject obst)
     {

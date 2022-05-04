@@ -249,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef1874e6993add449827372c08e3906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ObstacleController: {fileID: 1398083673}
 --- !u!1 &203341394
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,6 +659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef1874e6993add449827372c08e3906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ObstacleController: {fileID: 1398083673}
 --- !u!1 &1161538040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,6 +1137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef1874e6993add449827372c08e3906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ObstacleController: {fileID: 1398083673}
 --- !u!1 &1654512810
 GameObject:
   m_ObjectHideFlags: 0

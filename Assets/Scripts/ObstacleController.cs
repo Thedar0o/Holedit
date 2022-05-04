@@ -31,8 +31,8 @@ public class ObstacleController : Controller
         Speed = Random.Range(2f, 5f);
         m_t = 0;
         alpha = 1;
-        m_Hiding = HideAndCreateNew(Speed);
-        StartCoroutine(m_Hiding);
+        //m_Hiding = HideBlock(Speed);
+        //StartCoroutine(m_Hiding);
         m_IsFading = false;
         m_HoleRenderer.material.color = new Color(m_HoleRenderer.material.color.r, m_HoleRenderer.material.color.g, m_HoleRenderer.material.color.b, 1);
         m_LeftBlockRenderer.material.color = new Color(m_LeftBlockRenderer.material.color.r, m_LeftBlockRenderer.material.color.g, m_LeftBlockRenderer.material.color.b, 1);
@@ -60,39 +60,44 @@ public class ObstacleController : Controller
         Move(Speed);       
     }
     
-    IEnumerator HideAndCreateNew(float duration)
+    private IEnumerator HideBlock(float duration)
     {
-        do
-        {
-            if(IsSpawnedDown && gameObject.transform.position.z > 0.25f) m_IsFading = true;
-            if(!IsSpawnedDown && gameObject.transform.position.z < -0.25f) m_IsFading = true;
-            yield return null;
-        }
-        while (!m_IsFading);
-
+        //do
+        //{
+        //    if(IsSpawnedDown && gameObject.transform.position.z > 0.25f) m_IsFading = true;
+        //    if(!IsSpawnedDown && gameObject.transform.position.z < -0.25f) m_IsFading = true;
+        //    yield return null;
+        //}
+        //while (!m_IsFading);
         
         while (m_IsFading)
         {
-            alpha = Mathf.Lerp(1f, 0f, m_t);
-            m_t += 0.4f*Time.deltaTime;
-            m_HoleRenderer.material.color = new Color(m_HoleRenderer.material.color.r, m_HoleRenderer.material.color.g, m_HoleRenderer.material.color.b, alpha);
-            m_LeftBlockRenderer.material.color = new Color(m_LeftBlockRenderer.material.color.r, m_LeftBlockRenderer.material.color.g, m_LeftBlockRenderer.material.color.b, alpha);
-            m_RightBlockRenderer.material.color = new Color(m_RightBlockRenderer.material.color.r, m_RightBlockRenderer.material.color.g, m_RightBlockRenderer.material.color.b, alpha);
+            ChangeAlfa();
             if (alpha == 0f)
             {
                 m_IsFading = false;
-                GameObject obs = ObstacleSpawnController.Instance.GetPooledObj();
-                if(obs != null)
-                {
-                    obs.SetActive(true);
-                }
+                //Spawn();
                 gameObject.SetActive(false);
                 yield break;
             }
             yield return null;
-        }
-        
+        }        
         yield return null;
     }      
+    
+    public void StartHidingBlock(float duration)
+    {
+        m_IsFading = true;
+        m_Hiding = HideBlock(Speed);
+        StartCoroutine(m_Hiding);
+    }
 
+    private void ChangeAlfa()
+    {
+        alpha = Mathf.Lerp(1f, 0f, m_t);
+        m_t += 0.7f * Time.deltaTime;
+        m_HoleRenderer.material.color = new Color(m_HoleRenderer.material.color.r, m_HoleRenderer.material.color.g, m_HoleRenderer.material.color.b, alpha);
+        m_LeftBlockRenderer.material.color = new Color(m_LeftBlockRenderer.material.color.r, m_LeftBlockRenderer.material.color.g, m_LeftBlockRenderer.material.color.b, alpha);
+        m_RightBlockRenderer.material.color = new Color(m_RightBlockRenderer.material.color.r, m_RightBlockRenderer.material.color.g, m_RightBlockRenderer.material.color.b, alpha);
+    }
 }
