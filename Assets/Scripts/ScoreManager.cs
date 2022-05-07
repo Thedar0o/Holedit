@@ -8,11 +8,11 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]
     Text m_Score;
 
-    void Start()
-    {
-        SetScore(0);
-        ShowScore(false);
-    }
+    //void Start()
+    //{
+    //    SetScore(0);
+    //    ShowScore(false);
+    //}
 
     public void SetScore(int score)
     {

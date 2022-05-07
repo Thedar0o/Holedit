@@ -15,7 +15,7 @@ public class HpBarInfo : MonoBehaviour
     void Start()
     {
         SetHPStatus(3);
-        ShowHP(false);
+        //ShowHP(false);
     }
     private void ToggleHp(int count)
     {

@@ -16,9 +16,12 @@ public class InGameUIController : MonoBehaviour
     BeginGame m_Begin;
 
     private bool m_IsjustStarted;
+    private PlayerInfo m_PayerInfo;
+    private HpBarInfo m_Hp;
 
     private void Start()
     {
+        m_PayerInfo = m_PlayerInfo.GetComponent<PlayerInfo>();
         GameManage.Instance.FirstStart();
         Init();
     }
@@ -34,6 +37,8 @@ public class InGameUIController : MonoBehaviour
     private void Update()
     {
         ShowHidePause();
+        m_PayerInfo.SetScore(GameManage.Instance.MainScore);
+        m_PayerInfo.SetHP(GameManage.Instance.MainLife);
         if (Input.anyKey)
         {
             m_Begin.WasStarted();

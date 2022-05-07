@@ -23,6 +23,8 @@ public class GameManage : MonoBehaviour
     public static GameManage Instance;
     private IEnumerator loadScene;
     public GameState State;
+    public int MainScore;
+    public int MainLife;
 
     private void Awake()
     {
@@ -35,6 +37,8 @@ public class GameManage : MonoBehaviour
 
     private void Start()
     {
+        MainScore = 0;
+        MainLife = 3;
         LoadScene(Scenes.MainMenu);
     }
 

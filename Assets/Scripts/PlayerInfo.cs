@@ -10,5 +10,14 @@ public class PlayerInfo : MonoBehaviour
 
     [SerializeField]
     ScoreManager m_ScoreInfo;
-        
+
+    public void SetScore(int score)
+    {
+        m_ScoreInfo.SetScore(score);
+    }
+     
+    public void SetHP(int hp)
+    {
+        m_HpBar.SetHPStatus(hp);
+    }
 }

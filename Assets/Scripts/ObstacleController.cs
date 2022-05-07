@@ -25,6 +25,9 @@ public class ObstacleController : Controller
 
     private void InitValues()
     {
+        Hole.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        LeftBlock.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        RightBlock.gameObject.GetComponent<BoxCollider>().isTrigger = true;
         m_HoleRenderer = Hole.GetComponent<MeshRenderer>();
         m_LeftBlockRenderer = LeftBlock.GetComponent<MeshRenderer>();
         m_RightBlockRenderer = RightBlock.GetComponent<MeshRenderer>();
@@ -87,6 +90,7 @@ public class ObstacleController : Controller
     
     public void StartHidingBlock(float duration)
     {
+        DisableTrigger();
         m_IsFading = true;
         m_Hiding = HideBlock(Speed);
         StartCoroutine(m_Hiding);
@@ -99,5 +103,12 @@ public class ObstacleController : Controller
         m_HoleRenderer.material.color = new Color(m_HoleRenderer.material.color.r, m_HoleRenderer.material.color.g, m_HoleRenderer.material.color.b, alpha);
         m_LeftBlockRenderer.material.color = new Color(m_LeftBlockRenderer.material.color.r, m_LeftBlockRenderer.material.color.g, m_LeftBlockRenderer.material.color.b, alpha);
         m_RightBlockRenderer.material.color = new Color(m_RightBlockRenderer.material.color.r, m_RightBlockRenderer.material.color.g, m_RightBlockRenderer.material.color.b, alpha);
+    }
+
+    public void DisableTrigger()
+    {
+        Hole.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+        LeftBlock.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+        RightBlock.gameObject.GetComponent<BoxCollider>().isTrigger = false;
     }
 }
