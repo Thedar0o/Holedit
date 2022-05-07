@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManage : MonoBehaviour
 {
+    public enum GameState
+    {
+        None = -1,
+        Pause = 0,
+        UnPause,
+        FirsStart,
+    }
     public enum Scenes
     {
         None = -1,
@@ -15,7 +22,7 @@ public class GameManage : MonoBehaviour
     
     public static GameManage Instance;
     private IEnumerator loadScene;
-   
+    public GameState State;
 
     private void Awake()
     {
@@ -52,6 +59,24 @@ public class GameManage : MonoBehaviour
     public void OnExit()
     {
         Application.Quit();
+    }
+
+    public void Pause()
+    {
+        State = GameState.Pause;
+        Time.timeScale = 0;
+    }
+
+    public void UnPause()
+    {
+        State = GameState.UnPause;
+        Time.timeScale = 1;
+    }
+
+    public void FirstStart()
+    {
+        State = GameState.FirsStart;
+        Time.timeScale = 0;
     }
 
 }

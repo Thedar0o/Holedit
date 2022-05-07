@@ -43,6 +43,7 @@ public class PlayerController : Controller
     // Update is called once per frame
     void Update()
     {
+        TogglePauseGame();
         if (UseLeftMouse())
             Move(Speed);
     }

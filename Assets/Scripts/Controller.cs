@@ -33,6 +33,7 @@ public abstract class Controller : MonoBehaviour, IController
         Middle = 2,
     }
 
+    private GameManage m_manager;
     public GameObject Character { get; set; }
     public float Speed { get; set; }
 
@@ -42,7 +43,7 @@ public abstract class Controller : MonoBehaviour, IController
    
     public virtual void Init()
     {
-        
+        m_manager = GameManage.Instance;
     }
 
     public virtual bool UseLeftMouse()
@@ -56,11 +57,21 @@ public abstract class Controller : MonoBehaviour, IController
         return false;
     }
 
-    public virtual bool UseMiddleMouse()
+    public virtual bool UseMiddleMouseDown()
     {
-        if (Input.GetMouseButton((int)MouseButtons.Middle)) return true;
+        if (Input.GetMouseButtonDown((int)MouseButtons.Middle)) return true;
         return false;
     }
+
+    public virtual void TogglePauseGame()
+    {
+        if (Input.GetKeyDown(KeyCode.P) || UseMiddleMouseDown())
+        {
+            if (m_manager.State == GameManage.GameState.Pause) m_manager.UnPause();
+            else m_manager.Pause();
+        }
+    }
+
 
     void Awake()
     {
