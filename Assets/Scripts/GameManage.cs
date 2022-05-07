@@ -49,4 +49,9 @@ public class GameManage : MonoBehaviour
         StartCoroutine(loadScene);
     }
 
+    public void OnExit()
+    {
+        Application.Quit();
+    }
+
 }

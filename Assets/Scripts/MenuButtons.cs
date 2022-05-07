@@ -37,7 +37,7 @@ public class MenuButtons : UIButtonController
                 Debug.Log("Score");
                 break;
             case CommandName.Exit:
-                Debug.Log("Exit");
+                Exit();
                 break;
         }
     }
@@ -45,6 +45,21 @@ public class MenuButtons : UIButtonController
     private void StartGame()
     {
         GameManage.Instance.LoadScene(GameManage.Scenes.NewGame);
+    }
+
+    private void Exit()
+    {
+        GameManage.Instance.OnExit();
+    }
+
+    private void Score()
+    {
+
+    }
+
+    private void OpenScoreBoard()
+    {
+
     }
     
 }
