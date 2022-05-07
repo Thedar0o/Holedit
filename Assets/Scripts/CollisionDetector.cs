@@ -16,19 +16,9 @@ public class CollisionDetector : MonoBehaviour
     private void OnTriggerEnter(Collider ObjOnCollision)
     {
         var go = ObjOnCollision.gameObject;
-        if (gameObject.layer.Equals(6) && go.layer.Equals(8)) OnCrash();
-        if (gameObject.layer.Equals(7) && go.layer.Equals(8)) OnScore();
+        if (gameObject.layer.Equals(6) && go.layer.Equals(8)) m_ObstacleController.OnCrash();
+        if (gameObject.layer.Equals(7) && go.layer.Equals(8)) m_ObstacleController.OnScore();
     }
 
-    private void OnScore()
-    {
-        m_ObstacleController.StartHidingBlock(3);
-        GameManage.Instance.MainScore += 1 ;
-    }
-
-    private void OnCrash()
-    {
-        m_ObstacleController.DisableTrigger();
-        GameManage.Instance.MainLife--;
-    }
+   
 }

@@ -28,6 +28,7 @@ public class InGameUIController : MonoBehaviour
 
     void Init()
     {
+        GameManage.Instance.MainLife = 3;
         m_StartInfo.SetActive(true);
         m_InGameMenu.SetActive(false);
         m_PlayerInfo.SetActive(false);
@@ -42,6 +43,12 @@ public class InGameUIController : MonoBehaviour
         if (Input.anyKey)
         {
             m_Begin.WasStarted();
+        }
+        if (GameManage.Instance.MainLife == 0)
+        {
+            //GameManage.Instance.LoadScene(GameManage.Scenes.MainMenu);
+            GameManage.Instance.State = GameManage.GameState.Pause;
+            GameManage.Instance.MainLife = 3;
         }
     }
 

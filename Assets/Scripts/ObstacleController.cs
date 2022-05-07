@@ -34,8 +34,6 @@ public class ObstacleController : Controller
         Speed = Random.Range(2f, 5f);
         m_t = 0;
         alpha = 1;
-        //m_Hiding = HideBlock(Speed);
-        //StartCoroutine(m_Hiding);
         m_IsFading = false;
         m_HoleRenderer.material.color = new Color(m_HoleRenderer.material.color.r, m_HoleRenderer.material.color.g, m_HoleRenderer.material.color.b, 1);
         m_LeftBlockRenderer.material.color = new Color(m_LeftBlockRenderer.material.color.r, m_LeftBlockRenderer.material.color.g, m_LeftBlockRenderer.material.color.b, 1);
@@ -110,5 +108,19 @@ public class ObstacleController : Controller
         Hole.gameObject.GetComponent<BoxCollider>().isTrigger = false;
         LeftBlock.gameObject.GetComponent<BoxCollider>().isTrigger = false;
         RightBlock.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+    }
+
+    public void OnScore()
+    {
+        StartHidingBlock(3);
+        GameManage.Instance.MainScore += 1;
+    }
+
+    public void OnCrash()
+    {
+        DisableTrigger();
+        StartHidingBlock(6f);
+        ObstacleSpawnController.Instance.MainCamera.StartShaking();
+        GameManage.Instance.MainLife--;
     }
 }

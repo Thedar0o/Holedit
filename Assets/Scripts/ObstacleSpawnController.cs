@@ -9,6 +9,8 @@ public class ObstacleSpawnController : MonoBehaviour
     [Range(3, 17)] private int BlockLongValue;
 
     public static ObstacleSpawnController Instance;
+    public CameraShaker MainCamera;
+
     private List<GameObject> m_Obstacles = new List<GameObject>();
     private static int s_Widht = 17;
     private int m_ObstSpawnPoint;
