@@ -16,7 +16,7 @@ public class CollisionDetector : MonoBehaviour
     private void OnTriggerEnter(Collider ObjOnCollision)
     {
         var go = ObjOnCollision.gameObject;
-        if (gameObject.layer.Equals(6) && go.gameObject.layer.Equals(8)) UnityEngine.SceneManagement.SceneManager.LoadScene(0);//dosth;
+        if (gameObject.layer.Equals(6) && go.gameObject.layer.Equals(8)) GameManage.Instance.LoadScene(GameManage.Scenes.NewGame);//dosth;
         if (gameObject.layer.Equals(7) && go.gameObject.layer.Equals(8)) m_ObstacleController.StartHidingBlock(2);//dosth
     }
 }

@@ -34,6 +34,7 @@ public class ObstacleSpawnController : MonoBehaviour
     }
     void Start()
     {
+        if (BlockLongValue % 2 == 0) BlockLongValue = BlockLongValue + 1;
         for (int i = 0; i < SpawnAmmount; i++)
         {
             GameObject obj = Instantiate(ObjectHolder);
@@ -97,12 +98,16 @@ public class ObstacleSpawnController : MonoBehaviour
             m_RightObstxScale += m_CubeSpawnPoint*(-1);
             m_RightObstPos = (Mathf.Abs(((Mathf.Abs(8f - m_RightObstxScale)) / 2f)-m_RightObstPos));
         }
-        else
+        else if(m_CubeSpawnPoint > 0)
         {
             m_LeftObstxScale += m_CubeSpawnPoint;
             m_LeftObstPos = (((Mathf.Abs(8f - m_LeftObstxScale)) / 2f) + m_LeftObstPos);
             m_RightObstxScale -= m_CubeSpawnPoint;
             m_RightObstPos = (Mathf.Abs(((Mathf.Abs(8f - m_RightObstxScale)) / 2f) + m_RightObstPos));
+        }
+        else
+        {
+            ZeroAll();
         }
         ObstacleControl.Hole.transform.localPosition = new Vector3(m_CubeSpawnPoint, 0, 0);
 
