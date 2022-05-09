@@ -21,10 +21,13 @@ public class GameManage : MonoBehaviour
     }
     
     public static GameManage Instance;
+    public bool GameWasStarted;
     private IEnumerator loadScene;
     public GameState State;
     public int MainScore;
     public int MainLife;
+    public int Windowed = 1;
+    public bool CanPause;
 
     private void Awake()
     {
@@ -33,6 +36,8 @@ public class GameManage : MonoBehaviour
             Instance = this;
         }               
         DontDestroyOnLoad(this);
+        Windowed = PlayerPrefs.GetInt("Windowed");
+        Screen.fullScreen = Windowed == 1 ? false: true;
     }
 
     private void Start()
@@ -54,9 +59,18 @@ public class GameManage : MonoBehaviour
         yield return null;
     }
 
-    public void LoadScene(Scenes scenes)
+    public void LoadScene(Scenes scene)
     {
-        loadScene = LoadSceneAsync(scenes);
+        loadScene = LoadSceneAsync(scene);
+        StartCoroutine(loadScene);
+    }
+
+    public void StartGame(bool InGame)
+    {
+        GameManage.Instance.GameWasStarted = true;
+        UnPause();
+        FirstStart();
+        loadScene = LoadSceneAsync(Scenes.NewGame);
         StartCoroutine(loadScene);
     }
 
@@ -81,6 +95,29 @@ public class GameManage : MonoBehaviour
     {
         State = GameState.FirsStart;
         Time.timeScale = 0;
+        MainScore = 0;
     }
 
+    public void SaveWindowedToPrefs(int value)
+    {
+        Windowed = value;
+        PlayerPrefs.SetInt("Windowed", Windowed);
+        //SetWindowed();
+        PlayerPrefs.Save();
+    }
+
+    public void SetWindowed()
+    {
+        if (Screen.fullScreen)
+        {
+            Screen.fullScreen = false;
+            Windowed = 1;           
+        }
+        else
+        {
+            Screen.fullScreen = true;
+            Windowed = 0;            
+        }
+        SaveWindowedToPrefs(Windowed);
+    }
 }

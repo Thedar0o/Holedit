@@ -5,19 +5,21 @@ using UnityEngine;
 public class InGameUIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject m_InGameMenu;
+    private GameObject m_InGameMenu;
     [SerializeField]
-    GameObject m_PlayerInfo;
+    private GameObject m_PlayerInfo;
     [SerializeField]
-    GameObject m_StartInfo;
+    private GameObject m_StartInfo;
     [SerializeField]
-    GameObject m_Character;
+    private GameObject m_Character;
     [SerializeField]
-    BeginGame m_Begin;
+    private BeginGame m_Begin;
+    [SerializeField]
+    private UnityEngine.UI.Text m_Pause;
+    [SerializeField]
+    private GameObject m_Resume;
 
-    private bool m_IsjustStarted;
     private PlayerInfo m_PayerInfo;
-    private HpBarInfo m_Hp;
 
     private void Start()
     {
@@ -40,15 +42,11 @@ public class InGameUIController : MonoBehaviour
         ShowHidePause();
         m_PayerInfo.SetScore(GameManage.Instance.MainScore);
         m_PayerInfo.SetHP(GameManage.Instance.MainLife);
-        if (Input.anyKey)
-        {
-            m_Begin.WasStarted();
-        }
+       
+
         if (GameManage.Instance.MainLife == 0)
         {
-            //GameManage.Instance.LoadScene(GameManage.Scenes.MainMenu);
-            GameManage.Instance.State = GameManage.GameState.Pause;
-            GameManage.Instance.MainLife = 3;
+            OnDeath();
         }
     }
 
@@ -63,9 +61,10 @@ public class InGameUIController : MonoBehaviour
         }
         else if (GameManage.Instance.State == GameManage.GameState.Pause)
         {
+            //m_Pause.text = "PAUSE";
             m_InGameMenu.SetActive(true);
             m_PlayerInfo.SetActive(false);
-            m_Character.SetActive(false);
+            m_Character.SetActive(false);            
         }
         else
         {
@@ -74,4 +73,13 @@ public class InGameUIController : MonoBehaviour
         }
     }
 
+
+    private void OnDeath()
+    {
+        m_Pause.text = "DEFEAT";
+        GameManage.Instance.CanPause = false;
+        GameManage.Instance.State = GameManage.GameState.Pause;
+        GameManage.Instance.MainLife = 3;
+        m_Resume.SetActive(false);
+    }
 }

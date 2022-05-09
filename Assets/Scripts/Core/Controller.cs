@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Controller : MonoBehaviour, IController
+public abstract class Controller : MonoBehaviour
 {
+    #region Enums
     public enum InputStateFlags
     {
         Null = -1,
@@ -32,15 +33,18 @@ public abstract class Controller : MonoBehaviour, IController
         Right = 1,
         Middle = 2,
     }
-
+    #endregion
     private GameManage m_manager;
-    public GameObject Character { get; set; }
     public float Speed { get; set; }
-
     public bool IsPlayer { get; set; }
 
-    public abstract void Move(float speed);
-   
+    private void Awake()
+    {
+        Init();
+    }
+
+    public abstract void Move(float speed);   
+
     public virtual void Init()
     {
         m_manager = GameManage.Instance;
@@ -73,8 +77,5 @@ public abstract class Controller : MonoBehaviour, IController
     }
 
 
-    void Awake()
-    {
-        Init();
-    }
+    
 }

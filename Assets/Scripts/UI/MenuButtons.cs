@@ -31,10 +31,9 @@ public class MenuButtons : UIButtonController
                 StartGame();
                 break;
             case CommandName.Options:
-                Debug.Log("Options");
+                Options();
                 break;
             case CommandName.Score:
-                Debug.Log("Score");
                 break;
             case CommandName.Exit:
                 Exit();
@@ -45,6 +44,7 @@ public class MenuButtons : UIButtonController
     private void StartGame()
     {
         GameManage.Instance.LoadScene(GameManage.Scenes.NewGame);
+        GameManage.Instance.GameWasStarted = false;
     }
 
     private void Exit()
@@ -52,14 +52,11 @@ public class MenuButtons : UIButtonController
         GameManage.Instance.OnExit();
     }
 
-    private void Score()
+    private void Options()
     {
-
+        GameManage.Instance.SetWindowed();
     }
 
-    private void OpenScoreBoard()
-    {
-
-    }
+    
     
 }

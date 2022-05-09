@@ -26,24 +26,14 @@ public class PlayerController : Controller
 
     public override void Move(float speed)
     {
-        //if (UseLeftMouse())
-        //{
         m_Playerstates = PlayerStates.OnMove;
         MovePlayerToPosition(speed);
-        // }
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        TogglePauseGame();
+        if(GameManage.Instance.CanPause) TogglePauseGame();
         if (UseLeftMouse())
             Move(Speed);
     }

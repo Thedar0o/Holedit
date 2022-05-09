@@ -8,12 +8,6 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]
     Text m_Score;
 
-    //void Start()
-    //{
-    //    SetScore(0);
-    //    ShowScore(false);
-    //}
-
     public void SetScore(int score)
     {
         m_Score.text = "SCORE: " + score.ToString();
@@ -24,5 +18,6 @@ public class ScoreManager : MonoBehaviour
         if (shouldBeShowed) gameObject.SetActive(true);
         else gameObject.SetActive(false);
     }
-
+        
+   
 }

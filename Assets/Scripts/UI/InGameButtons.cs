@@ -8,19 +8,20 @@ public class InGameButtons : UIButtonController
     {
         None = -1,
         Restart = 0,
-        Resume,
-        Options,
-        Score,
-        Back,
+        Resume =1,
+        Options=2,
+        Score=3,
+        Back=4,
     }
+
 
     private void Start()
     {
         m_commands[0].gm.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnButtonClicked(0));
         m_commands[1].gm.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnButtonClicked(1));
-        m_commands[1].gm.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnButtonClicked(2));
-        m_commands[2].gm.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnButtonClicked(3));
-        m_commands[3].gm.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnButtonClicked(4));
+        m_commands[2].gm.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnButtonClicked(2));
+        m_commands[3].gm.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnButtonClicked(3));
+        m_commands[4].gm.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnButtonClicked(4));
     }
 
     public override void OnButtonClicked(int id)
@@ -31,12 +32,12 @@ public class InGameButtons : UIButtonController
                 Restart();
                 break;
             case CommandName.Resume:
+                Resume();
                 break;
             case CommandName.Options:
-                Debug.Log("Options");
+                Options();
                 break;
             case CommandName.Score:
-                Debug.Log("Score");
                 break;
             case CommandName.Back:
                 Exit();
@@ -46,7 +47,7 @@ public class InGameButtons : UIButtonController
 
     private void Restart()
     {
-        GameManage.Instance.LoadScene(GameManage.Scenes.NewGame);
+        GameManage.Instance.StartGame(true);        
     }
 
     private void Exit()
@@ -54,14 +55,14 @@ public class InGameButtons : UIButtonController
         GameManage.Instance.LoadScene(GameManage.Scenes.MainMenu);
     }
 
-    private void Score()
+    private void Resume()
     {
-
+        GameManage.Instance.UnPause();
     }
 
-    private void OpenScoreBoard()
+    private void Options()
     {
-
+        GameManage.Instance.SetWindowed();
     }
 
 }

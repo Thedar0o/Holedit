@@ -71,7 +71,7 @@ public class ObstacleSpawnController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(1f,3f));
+            yield return new WaitForSeconds(Random.Range(1f,2.5f));
             SpawnObstacle();
             //yield return null;
         }
@@ -113,10 +113,10 @@ public class ObstacleSpawnController : MonoBehaviour
         }
         ObstacleControl.Hole.transform.localPosition = new Vector3(m_CubeSpawnPoint, 0, 0);
 
-        ObstacleControl.LeftBlock.transform.localScale = new Vector3(m_LeftObstxScale, 1, 1);
+        ObstacleControl.LeftBlock.transform.localScale = new Vector3(m_LeftObstxScale, 1, 0.75f);
         ObstacleControl.LeftBlock.transform.localPosition = new Vector3(m_LeftObstPos, 0, 0);
         
-        ObstacleControl.RightBlock.transform.localScale = new Vector3(m_RightObstxScale,  1, 1);
+        ObstacleControl.RightBlock.transform.localScale = new Vector3(m_RightObstxScale,  1, 0.75f);
         ObstacleControl.RightBlock.transform.localPosition = new Vector3(m_RightObstPos, 0, 0);
 
         return obst;
